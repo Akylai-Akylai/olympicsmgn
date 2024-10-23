@@ -1,0 +1,15 @@
+import random
+lst = []
+lst_2 = []
+for i in range(0,10):
+    number = random.randint(1,100)
+    lst.append(number)
+    if number % 7 == 0:
+        lst_2.append(number)
+lst.sort(reverse=True)
+lst_2.sort(reverse=True)
+print(lst)
+if len(lst_2) >= 3:
+    print(lst_2[0], lst_2[1], lst_2[2])
+else:
+    print('Таких трех чисел нет')
