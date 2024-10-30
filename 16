@@ -1,9 +1,13 @@
-n = int(input())
-
-
-while n > 0:
-    r = n % 16
-    if  r < 10:
-
-    
-print(r)
+a = int(input())
+print(bin(a))
+s = ''
+b = 'ABCDEFGHIJKLMNOP'
+while a != 0:
+    tmp = a%16
+    if tmp > 9: #0 #1 #2 #3 #4 #5
+        tmp = tmp - 10
+        s+=b [tmp]
+    else:
+        s+=str(tmp)
+    a//=16
+print(s[::-1])
