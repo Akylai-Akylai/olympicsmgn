@@ -1,0 +1,11 @@
+a = int(input('число из 10 СС'))
+n = int(input('переводимое сс'))
+perevod = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+b = a//n
+lst = []
+lst.insert(0, perevod[a%n])
+#insert переворачивает 
+while b!= 0:
+    lst.insert(0, perevod[b%n])
+    b = b//n
+print(''.join(lst))
