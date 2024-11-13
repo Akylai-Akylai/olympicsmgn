@@ -1,0 +1,11 @@
+a = int(input())
+lst = ['W', 'm', 'a', 'a', 'm', 'w', 'w', 'm', 'a', 'a', 'm', 'w']
+count = [11, 9, 7, 5, 3, 1]
+for i in range(a):
+    b = lst[i%12]
+    if a % 12<=6:
+        another_seat = a + count[(a%6)-1]
+    if a % 12> 6:
+        count.reverse()
+        another_seat = a- count[(a%6)-1]
+print(F"{another_seat}{b}")
