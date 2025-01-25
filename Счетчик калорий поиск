@@ -1,0 +1,49 @@
+from tkinter import *
+from tkinter import ttk
+wind = Tk()     
+wind.title("поисковое окно")    
+wind.geometry("400x500")
+
+notebook = ttk.Notebook()
+notebook.enable_traversal()
+notebook.pack(expand=True, fill=BOTH)
+ 
+frame1 = ttk.Frame(notebook)
+
+frame = ttk.Frame(frame1, borderwidth=1, relief=SUNKEN, padding=5)
+name_label = ttk.Label(frame1, text="Поиск")
+name_label.pack(anchor=NW)
+ 
+name_entry = ttk.Entry(frame1)
+name_entry.pack(anchor=NW)
+
+def click():
+    window = Tk()
+    window.title("История")
+    window.geometry("250x200")
+
+text = 'продукт'
+btn = ttk.Button(frame1,text=text, command=click)
+btn.pack(anchor=NW, expand=1, padx=10, pady=10)
+
+btn2 = ttk.Button(frame1,text=text+'2', command=click)
+btn2.pack(anchor=NW, expand=1, padx=10, pady=10)
+
+btn3 = ttk.Button(frame1,text=text+'3', command=click)
+btn3.pack(anchor=NW, expand=1, padx=10, pady=10)
+
+ 
+frame.pack(anchor=NW, fill=X, padx=10, pady=10)
+
+frame2 = ttk.Frame(notebook)
+frame3 = ttk.Frame(notebook)
+
+frame1.pack(fill=BOTH, expand=True)
+frame2.pack(fill=BOTH, expand=True)
+frame3.pack(fill=BOTH, expand=True)
+ 
+notebook.add(frame1, text="Поиск")
+notebook.add(frame2, text="Дневник")
+notebook.add(frame3, text="Настойки")
+
+wind.mainloop()
