@@ -1,5 +1,5 @@
 import requests
-response = requests.get('http://127.0.0.1:5000/api/list')
+response = requests.get('http://127.0.0.1:5000/products')
 print(response.text)
 
 ***
@@ -9,9 +9,9 @@ app = Flask('')
 
 products = ['картошка','редька','лук']
 
-@app.route('/api/list')
-def hello_world():
-  return (products)
+@app.route('/products')
+def products():
+  return products
 
 app.run(debug=True)
  
