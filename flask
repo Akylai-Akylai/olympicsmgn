@@ -1,17 +1,29 @@
 import requests
-response = requests.get('http://127.0.0.1:5000/products')
-print(response.text)
+
+print('запрос')
+response = requests.get('http://127.0.0.1:8000/')
+print('ответ', response.text)
+
+print('запрос')
+response= requests.get("http://127.0.0.1:8000/products")
+print('ответ', response.text)
 
 ***
 
 from flask import Flask
-app = Flask('')
+app = Flask(" ")
 
-products = ['картошка','редька','лук']
+products = ['potato','tomato','cucumber']
 
-@app.route('/products', methods=['GET'])
+@app.route('/')
+def hello():
+    print("hello")
+
+@app.route('/products')
 def products():
-  return products
+    return products
 
-app.run(debug=True)
+
+app.run(port = 8000, debug=True)
+
  
