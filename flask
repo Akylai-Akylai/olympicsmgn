@@ -1,0 +1,17 @@
+import requests
+response = requests.get('http://127.0.0.1:5000/api/list')
+print(response.text)
+
+***
+
+from flask import Flask
+app = Flask('')
+
+products = ['картошка','редька','лук']
+
+@app.route('/api/list')
+def hello_world():
+  return (products)
+
+app.run(debug=True)
+ 
