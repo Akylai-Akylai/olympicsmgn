@@ -9,7 +9,7 @@ app = Flask('')
 
 products = ['картошка','редька','лук']
 
-@app.route('/products')
+@app.route('/products', methods=['GET'])
 def products():
   return products
 
