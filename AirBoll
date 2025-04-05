@@ -1,16 +1,48 @@
 import superwires
+import random
 from superwires import games
-games.init(screen_width=600, screen_height=500, fps=20)
+games.init(screen_width=900, screen_height=600, fps=30)
 
-class airboll(games.Sprite):
-    def __init__(self, image, x, y):
-        super().__init__(image = games.load_image('boll.png'), x = x, y = y, dx=dx,dy=dy)
-
-    def update(self):
-        print("image")
+class Airboll(games.Sprite):
     
-games.init(screen_width=600, screen_height=500, fps=20)
+    speed = 1
+    
+    def __init__(self):
+        super().__init__(image = games.load_image("boll.png"), x = 50, y = 50, dx = Airboll.speed,dy = Airboll.speed)
+        
+    def update(self):
+        if self.bottom > games.screen.height:
+            self.destroy()
+            
+    def boll_caught(self):
+            self.destroy()
+            Airboll.speed += 0.5
 
-games.screen.background=load_image('sky.png')
-games.screen.add(Sprite(games.load_image('boll.png'), x=320, y=240, dx=3, dy=3))
+class Dart(games.Sprite):
+    def __init__(self):
+        super().__init__(image = games.load_image("dart.png"),  x=games.mouse.x, y=games.mouse.y)
+        
+        self.score = games.Text(
+            value=0, size=60, color=color.black, x=1200, y=50)
+        games.screen.add(self.score)
+        
+    def update(self):
+        self.x = games.mouse.x
+        if self.left < 0:
+            self.left = 0
+        if self.right > games.screen.width:
+            self.right = games.screen.width
+        self.check_catch()
+        
+    def check_catch(self):
+        for airboll in self.overlapping_sprites:
+            self.score.value += 10
+            self.score.right = games.screen.width - 10
+            airboll.boll_caught()   
+
+            
+games.screen.add(Airboll())
+games.screen.add(Dart())
+wall = games.load_image("sky2.png", transparent=False)
+games.screen.background = wall
 games.screen.mainloop()
