@@ -64,12 +64,12 @@ import random
 from superwires import games, color
 games.init(screen_width=900, screen_height=600, fps=30)
 
-class Airball(games.Sprite):
+class Airboll(games.Sprite):
     
     speed = 5
     
     def __init__(self):
-        super().__init__(image = games.load_image("ball.png"), x = 50, y = 50, dx = Airball.speed,dy = Airball.speed)
+        super().__init__(image = games.load_image("boll.png"), x = 50, y = 50, dx = Airboll.speed,dy = Airboll.speed)
         
     def update(self):
         if self.bottom > games.screen.height:
@@ -77,21 +77,15 @@ class Airball(games.Sprite):
             
     def boll_caught(self):
             self.destroy()
-            Airball.speed += 0.5
-class Score():
-    def __init__(value = value, size = size, color = color, x = x, y = y):
-        pass
-#
-        
-#        self.score = games.Text(
- #           value=0, size=60, color=color.white, x=1200, y=50)
-  #      games.screen.add(self.score)
+            Airboll.speed += 0.5
 
-  
 class Dart(games.Sprite):
     def __init__(self):
         super().__init__(image = games.load_image("dart.png"),  x=games.mouse.x, y=games.mouse.y)
-
+        
+        self.score = games.Text(
+            value=0, size=60, color=color.white, x=1200, y=50)
+        games.screen.add(self.score)
         
     def update(self):
         self.position = games.mouse.position
@@ -102,16 +96,14 @@ class Dart(games.Sprite):
         self.check_catch()
         
     def check_catch(self):
-        for airball in self.overlapping_sprites:
-            score.value += 10
-            score.right = games.screen.width - 10
-            airball.boll_caught()   
+        for airboll in self.overlapping_sprites:
+            self.score.value += 10
+            self.score.right = games.screen.width - 10
+            airboll.boll_caught()   
 
             
-games.screen.add(Airball())
+games.screen.add(Airboll())
 games.screen.add(Dart())
-score1 = Score(0, 60, color.white, 1200, 50)
-games.screen.add(score1)
 wall = games.load_image("sky2.png", transparent=False)
 games.screen.background = wall
 games.screen.mainloop()
