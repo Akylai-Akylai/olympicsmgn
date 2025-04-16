@@ -7,13 +7,10 @@ class Airball(games.Sprite):
     
     speed = 5
     
-    def __init__(self):
-        super().__init__(image = games.load_image("ball.png"), x = 50, y = 50, dx = Airball.speed,dy = Airball.speed)
+    def __init__(self, x):
+        super().__init__(image = games.load_image("ball.png"), x = x, y = 50, dx = Airball.speed,dy = Airball.speed)
         
-    def update(self):
-        if self.bottom > games.screen.height:
-            self.destroy()
-            
+
     def boll_caught(self):
             self.destroy()
             Airball.speed += 0.5
@@ -21,10 +18,6 @@ class Airball(games.Sprite):
 class Score(games.Text):
     def __init__(self, size, value, color, x, y):
          super().__init__(size = size, value = value, color = color, x = x, y = y)
-        
-#        self.score = games.Text(
- #           value=0, size=60, color=color.white, x=1200, y=50)
-  #      games.screen.add(self.score)
 
   
 class Dart(games.Sprite):
@@ -40,6 +33,9 @@ class Dart(games.Sprite):
         if self.right > games.screen.width:
             self.right = games.screen.width
         self.check_catch()
+
+        airball = Airball(random.randint(1, 50))
+        games.screen.add(airball)
         
     def check_catch(self):
         for airball in self.overlapping_sprites:
@@ -50,10 +46,9 @@ class Dart(games.Sprite):
 
 
 score1 = Score(60, 0, color.white, 1200, 50)
-airball = Airball()
-games.screen.add(airball)
 games.screen.add(Dart(score1))
 games.screen.add(score1)
 wall = games.load_image("sky2.png", transparent=False)
 games.screen.background = wall
 games.screen.mainloop()
+
