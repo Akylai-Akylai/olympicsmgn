@@ -33,22 +33,27 @@ class Dart(games.Sprite):
         if self.right > games.screen.width:
             self.right = games.screen.width
         self.check_catch()
-
-        airball = Airball(random.randint(1, 50))
-        games.screen.add(airball)
+        self.new_airball()
+        
+    def new_airball(self):        
+        n = 1
+        while n < 5:
+            airball = Airball(random.randint(1, 50))
+            n + 1
+            games.screen.add(airball)
         
     def check_catch(self):
         for airball in self.overlapping_sprites:
             if  isinstance(airball, Airball):
                 self.score.value += 10
                 score1.right = games.screen.width - 10
-                airball.boll_caught()   
+                airball.boll_caught() 
 
 
 score1 = Score(60, 0, color.white, 1200, 50)
 games.screen.add(Dart(score1))
 games.screen.add(score1)
-wall = games.load_image("sky2.png", transparent=False)
+wall = games.load_image("sky.png", transparent=False)
 games.screen.background = wall
 games.screen.mainloop()
 
