@@ -1,4 +1,3 @@
-import superwires
 import random
 from superwires import games, color
 games.init(screen_width=900, screen_height=600, fps=30)
@@ -7,8 +6,8 @@ class Airball(games.Sprite):
     
     speed = 5
     
-    def __init__(self, x):
-        super().__init__(image = games.load_image("ball.png"), x = x, y = 50, dx = Airball.speed,dy = Airball.speed)
+    def __init__(self, image, x, y, dx):
+        super().__init__(image = image, x = x, y = y, dx = dx, dy = Airball.speed)
         
 
     def boll_caught(self):
@@ -18,13 +17,24 @@ class Airball(games.Sprite):
 class Score(games.Text):
     def __init__(self, size, value, color, x, y):
          super().__init__(size = size, value = value, color = color, x = x, y = y)
+         
+class Win(games.Sprite):
+    def __init__(self):
+        super().__init__(image = games.load_image("Win.png"), x = 450, y = 300)
+            
+class Lose(games.Sprite):
+    def __init__(self):
+        super().__init__(image = games.load_image("lose.png"), x = 450, y = 300)
 
+    def lose(self):
+        if self.airball[0].x > games.screen.width or self.airball[0].x < 0:
+            games.screen.add(Lose())
   
 class Dart(games.Sprite):
-    #score = Score
     def __init__(self, score):
         super().__init__(image = games.load_image("dart.png"),  x=games.mouse.x, y=games.mouse.y)
         self.score = score
+        self.airballs = []
 
     def update(self):
         self.position = games.mouse.position
@@ -32,23 +42,37 @@ class Dart(games.Sprite):
             self.left = 0
         if self.right > games.screen.width:
             self.right = games.screen.width
-        self.check_catch()
-        self.new_airball()
+
+            
+        self.airball = Airball(games.load_image("ball.png"), random.randint(100,600), random.randint(100,300), random.randint(-3,5))
+        if len(self.airballs) < 2:
+            self.airballs.append(self.airball)
+            games.screen.add(self.airballs[0])
+            try:
+                games.screen.add(self.airballs[1])
+            except:
+                pass
+            print(self.airballs)
+            self.check_catch()
         
-    def new_airball(self):        
-        n = 1
-        while n < 5:
-            airball = Airball(random.randint(1, 50))
-            n + 1
-            games.screen.add(airball)
         
     def check_catch(self):
-        for airball in self.overlapping_sprites:
-            if  isinstance(airball, Airball):
+        for self.airballs[0] in self.overlapping_sprites:
+            if  isinstance(self.airballs[0], Airball):
                 self.score.value += 10
                 score1.right = games.screen.width - 10
                 airball.boll_caught() 
 
+        try:
+            for self.airballs[1] in self.overlapping_sprites:
+                if  isinstance(self.airballs[1], Airball):
+                    self.score.value += 10
+                    score1.right = games.screen.width - 10
+                    airball.boll_caught() 
+            if self.score.value == 100:
+                games.screen.add(Win())
+        except:
+            pass
 
 score1 = Score(60, 0, color.white, 1200, 50)
 games.screen.add(Dart(score1))
@@ -56,4 +80,3 @@ games.screen.add(score1)
 wall = games.load_image("sky.png", transparent=False)
 games.screen.background = wall
 games.screen.mainloop()
-
