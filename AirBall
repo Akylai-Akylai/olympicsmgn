@@ -3,11 +3,9 @@ import random
 
 class Airball(games.Sprite):
     def __init__(self, image, x, y):
-        super().__init__(image = image, x = x, y = y, dx = 2, dy = 5, is_collideable = True)
-
+        super().__init__(image = image, x = x, y = y, dx = 2, dy = 1, is_collideable = True)
     def speed(self):
-        if self.dy < 10:
-            self.dy += 1
+        if self.dy < 8: self.dy += 1
             
 class Score(games.Text):
     def __init__(self, size, value, color, x, y):
@@ -29,23 +27,16 @@ class Dart(games.Sprite):
 
             
         self.airball = Airball(games.load_image("ball.png"), random.randint(100,600), random.randint(100,300))
-        if len(self.airballs) <= 2:
+        if len(self.airballs) < 2:
             self.airballs.append(self.airball)
-            games.screen.add(self.airballs[0])
-            try:
-                games.screen.add(self.airballs[1])
-            except:
-                pass
-            print('-_- сломай меня полностью')
-        self.check_catch()
-        self.log()
+            for i in self.airballs:
+                games.screen.add(i)
 
-    def log(self):
-        if self.airballs[0].y > games.screen.height or self.airballs[0].y < 0:
-            self.airballs[0].destroy()
-            del self.airballs[0]
+        for i in self.airballs:
+            if self.airballs[0].y > games.screen.height or self.airballs[0].y < 0:
+                self.airballs[0].destroy()
+                del self.airballs[0]
             
-    def check_catch(self):
         for  i in self.airballs:
             if self.overlaps(i):
                 i.destroy()
