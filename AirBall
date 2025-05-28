@@ -22,8 +22,9 @@ class Start(games.Sprite):
         if games.keyboard.is_pressed(games.K_q):
             self.destroy()
             games.screen.add(Dart(games.load_image("dart.png")))
+            op()
             
-'''class Again(games.Sprite):
+class Again(games.Sprite):
     def __init__(self, image):
         super().__init__(image = image, x = 400, y = 650) 
         games.screen.add(End(games.load_image("Bce.png", transparent=False)))
@@ -34,8 +35,10 @@ class Start(games.Sprite):
     def check_clack(self):
         if games.keyboard.is_pressed(games.K_a):
             self.destroy()
-            Start.check_click(self)'''
-
+            games.screen.all_objects = []
+            games.screen.add(Start(games.load_image("start.png", transparent=False)))
+            op()
+            
 class Score(games.Text):
     def __init__(self, size, value, color, x, y):
          super().__init__(size = size, value = value, color = color, x = x, y = y)
@@ -46,7 +49,7 @@ class Dart(games.Sprite):
         self.score = Score(60, 0, color.white, 1200, 50)
         self.airballs = []
         games.screen.add(self.score)
-
+        
     def update(self):
         self.position = games.mouse.position
         if self.left <= 0:
@@ -65,12 +68,12 @@ class Dart(games.Sprite):
             if self.airballs[0].y > games.screen.height or self.airballs[0].y < 0:
                 self.airballs[0].destroy()
                 del self.airballs[0]
-                games.screen.clear()
-                #games.screen.add(Again(games.load_image("again.png")))
-                games.screen.add(End(games.load_image("Bce.png", transparent=False)))
+                games.screen.all_objects = []
+                games.screen.add(Again(games.load_image("again.png")))
+                #games.screen.add(End(games.load_image("Bce.png", transparent=False)))
             
         for  i in self.airballs:
-            if (self.overlaps(i) and games.keyboard.is_pressed(games.K_v)):
+            if (self.overlaps(i) and games.keyboard.is_pressed(games.K_SPACE)):
                 i.destroy()
                 self.score.value += 10
                 self.score.right = games.screen.width - 10
@@ -80,6 +83,8 @@ class Dart(games.Sprite):
 def exit():
     if games.keyboard.is_pressed(games.K_Esc):
         games.screen.quit()
+def op():
+    games.screen.background = games.load_image("sky.png", transparent=False)
     
 games.init(screen_width=1366, screen_height=768, fps=30)
 games.screen.add(Start(games.load_image("start.png", transparent=False)))
